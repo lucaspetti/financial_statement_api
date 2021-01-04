@@ -1,0 +1,16 @@
+development:
+  clients:
+    default:
+      database: ENV['DB_NAME']
+      hosts:
+        - localhost:27017
+      options:
+        server_selection_timeout: 1
+test:
+  clients:
+    default:
+      database: ENV['DB_TEST_NAME']
+      hosts:
+        - localhost:27017
+      options:
+        server_selection_timeout: 1

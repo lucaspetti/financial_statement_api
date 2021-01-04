@@ -5,6 +5,9 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '3.0.0'
 
+gem 'dotenv'
+gem 'mongo'
+gem 'mongoid'
 gem 'puma'
 gem 'sinatra', git: 'git://github.com/sinatra/sinatra.git'
 
