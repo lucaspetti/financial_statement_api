@@ -1,16 +1,18 @@
 development:
   clients:
     default:
-      database: ENV['DB_NAME']
+      database: financial_statement_development
       hosts:
         - localhost:27017
       options:
         server_selection_timeout: 1
+        raise_not_found_error: true
 test:
   clients:
     default:
-      database: ENV['DB_TEST_NAME']
+      database: financial_statement_test
       hosts:
         - localhost:27017
       options:
         server_selection_timeout: 1
+        raise_not_found_error: true
