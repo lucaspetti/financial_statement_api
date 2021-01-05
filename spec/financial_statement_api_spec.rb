@@ -42,7 +42,7 @@ RSpec.describe FinancialStatement::Api do
   end
 
   describe 'POST /financial_statements' do
-    let(:request) { post '/financial_statements', params: params }
+    let(:request) { post '/financial_statements', params }
 
     context 'when params are correct' do
       let(:params) { { financial_statement: { date: '2020-20-12' } } }
@@ -68,7 +68,7 @@ RSpec.describe FinancialStatement::Api do
 
       it 'returns the created statement it in JSON format' do
         request
-        expect(last_response).not_to be_ok
+        expect(last_response.status).to eq(422)
         expect(last_response.body).to eq('Could not create record')
       end
     end
