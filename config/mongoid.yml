@@ -6,7 +6,8 @@ development:
         - localhost:27017
       options:
         server_selection_timeout: 1
-        raise_not_found_error: true
+  options:
+    raise_not_found_error: true
 test:
   clients:
     default:
@@ -15,4 +16,5 @@ test:
         - localhost:27017
       options:
         server_selection_timeout: 1
-        raise_not_found_error: true
+  options:
+    raise_not_found_error: true
