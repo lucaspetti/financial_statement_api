@@ -5,7 +5,7 @@ require 'mongoid'
 require_relative 'document'
 require_relative 'document_validator'
 
-Mongoid.load!(File.open('./lib/config/mongoid.yml'))
+Mongoid.load!(File.open('./config/mongoid.yml'))
 
 module FinancialStatement
   class Api < ::Sinatra::Base
@@ -15,8 +15,8 @@ module FinancialStatement
 
     post '/financial_statements' do
       if DocumentValidator.new(params[:financial_statement]).valid?
-        statement = Document.create!(params[:financial_statement])
-        statement.to_json
+        document = Document.create!(params[:financial_statement])
+        document.to_json
       else
         status 422
         body 'Could not create record'
@@ -24,20 +24,40 @@ module FinancialStatement
     end
 
     get '/financial_statements/:id' do |id|
-      statement = Document.find(id)
-      statement.to_json
+      document = Document.find(id)
+      if document
+        document.to_json
+      else
+        render_not_found
+      end
     end
 
     put '/financial_statements/:id' do |id|
-      statement = Document.find(id)
-      statement.update!(params[:financial_statement])
-      statement.to_json
+      document = Document.find(id)
+      if document
+        document.update!(params[:financial_statement])
+        document.to_json
+      else
+        render_not_found
+      end
     end
 
     delete '/financial_statements/:id' do |id|
-      statement = Document.find(id)
-      statement.delete
-      "Financial statement #{id} was successfully deleted"
+      document = Document.find(id)
+      if document
+        document.delete
+        status 200
+        body "Financial statement #{id} was successfully deleted"
+      else
+        render_not_found
+      end
+    end
+
+    private
+
+    def render_not_found
+      status 404
+      body 'Record not found'
     end
   end
 end

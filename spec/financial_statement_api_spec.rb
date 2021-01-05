@@ -9,8 +9,8 @@ RSpec.describe FinancialStatement::Api do
 
   let(:json_response) do
     {
-      "_id"=>statement.id,
-      "date"=>statement.date,
+      "_id"=>document.id,
+      "date"=>document.date,
       "gross_profit"=>nil,
       "revenue"=>nil
     }
@@ -27,7 +27,7 @@ RSpec.describe FinancialStatement::Api do
     end
 
     context 'when there are records on the DB' do
-      let!(:statement) { FinancialStatement::Document.create!(date: '2020-20-12') }
+      let!(:document) { FinancialStatement::Document.create!(date: '2020-20-12') }
 
       before { get '/financial_statements' }
 
@@ -46,7 +46,7 @@ RSpec.describe FinancialStatement::Api do
 
     context 'when params are correct' do
       let(:params) { { financial_statement: { date: '2020-20-12' } } }
-      let(:statement) { FinancialStatement::Document.first }
+      let(:document) { FinancialStatement::Document.first }
 
       it 'creates a financial statement' do
         expect { request }.to change(FinancialStatement::Document, :count).by(1)
@@ -72,5 +72,66 @@ RSpec.describe FinancialStatement::Api do
         expect(last_response.body).to eq('Could not create record')
       end
     end
+  end
+
+  describe 'GET /financial_statements/:id' do
+    let(:request) { get "/financial_statements/#{id}" }
+    let!(:document) { FinancialStatement::Document.create!(date: '2020-20-12') }
+
+    context 'when record exists' do
+      let(:id) { document.id }
+
+      it 'returns the record in JSON format' do
+        request
+        expect(last_response).to be_ok
+        expect(last_response.body).to eq(document.to_json)
+      end
+    end
+
+    context 'when record does not exist' do
+      let(:id) { 'wrong_id' }
+
+      it 'returns 404' do
+        request
+        expect(last_response).to be_not_found
+        expect(last_response.body).to eq('Record not found')
+      end
+    end
+  end
+
+  describe 'PUT /financial_statements/:id' do
+    let(:request) { put "/financial_statements/#{id}", params }
+    let!(:document) { FinancialStatement::Document.create!(date: '2020-20-12') }
+    let(:params) { { financial_statement: { revenue: 8000 } } }
+
+    context 'when record exists' do
+      let(:id) { document.id }
+      let(:parsed_response) { JSON.parse(last_response.body) }
+
+      it 'updates the record and returns it in JSON format' do
+        request
+        expect(last_response).to be_ok
+        expect(parsed_response['revenue']).to eq(8000)
+      end
+    end
+
+    context 'when record does not exist' do
+      let(:id) { 'wrong_id' }
+
+      it 'returns 404' do
+        request
+        expect(last_response).to be_not_found
+        expect(last_response.body).to eq('Record not found')
+      end
+    end
+  end
+
+  describe 'DELETE /financial_statements/:id' do
+    let(:request) { put "/financial_statements/#{id}", params }
+    let!(:document) { FinancialStatement::Document.create!(date: '2020-20-12') }
+    let(:params) { { financial_statement: { revenue: 8000 } } }
+
+    context 'when record exists'
+    context 'when record does not exist'
   end
 end
