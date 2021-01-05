@@ -7,7 +7,7 @@ development:
       options:
         server_selection_timeout: 1
   options:
-    raise_not_found_error: true
+    raise_not_found_error: false
 test:
   clients:
     default:
@@ -17,4 +17,4 @@ test:
       options:
         server_selection_timeout: 1
   options:
-    raise_not_found_error: true
+    raise_not_found_error: false
