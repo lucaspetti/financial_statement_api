@@ -18,7 +18,7 @@
 ENV['RACK_ENV'] = 'test'
 
 require 'rack/test'
-require './lib/financial_statement_api'
+require './lib/financial_statement/api'
 require 'database_cleaner'
 
 RSpec.configure do |config|

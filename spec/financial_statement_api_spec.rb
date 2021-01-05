@@ -2,9 +2,9 @@
 
 require 'spec_helper'
 
-RSpec.describe FinancialStatementApi do
+RSpec.describe FinancialStatement::Api do
   def app
-    FinancialStatementApi
+    FinancialStatement::Api
   end
 
   let(:json_response) do
@@ -27,7 +27,7 @@ RSpec.describe FinancialStatementApi do
     end
 
     context 'when there are records on the DB' do
-      let!(:statement) { FinancialStatement.create!(date: '2020-20-12') }
+      let!(:statement) { FinancialStatement::Document.create!(date: '2020-20-12') }
 
       before { get '/financial_statements' }
 
@@ -46,10 +46,10 @@ RSpec.describe FinancialStatementApi do
 
     context 'when params are correct' do
       let(:params) { { financial_statement: { date: '2020-20-12' } } }
-      let(:statement) { FinancialStatement.first }
+      let(:statement) { FinancialStatement::Document.first }
 
       it 'creates a financial statement' do
-        expect { request }.to change(FinancialStatement, :count).by(1)
+        expect { request }.to change(FinancialStatement::Document, :count).by(1)
       end
 
       it 'returns the created statement it in JSON format' do
@@ -63,7 +63,7 @@ RSpec.describe FinancialStatementApi do
       let(:params) { {} }
 
       it 'does not create a financial statement' do
-        expect { request }.not_to change(FinancialStatement, :count)
+        expect { request }.not_to change(FinancialStatement::Document, :count)
       end
 
       it 'returns the created statement it in JSON format' do

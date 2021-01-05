@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
-class FinancialStatement
-  include Mongoid::Document
+require 'bundler/setup'
 
-  field :date, type: DateTime
-  field :revenue, type: Integer
-  field :gross_profit, type: Integer
+module FinancialStatement
 end

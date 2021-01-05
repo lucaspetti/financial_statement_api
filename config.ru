@@ -1,3 +1,3 @@
-require './lib/financial_statement_api'
+require './lib/financial_statement/api'
 
-run Rack::URLMap.new('/' => FinancialStatementApi)
+run Rack::URLMap.new('/' => FinancialStatement::Api)
