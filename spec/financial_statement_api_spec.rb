@@ -127,11 +127,28 @@ RSpec.describe FinancialStatement::Api do
   end
 
   describe 'DELETE /financial_statements/:id' do
-    let(:request) { put "/financial_statements/#{id}", params }
+    let(:request) { delete "/financial_statements/#{id}", params }
     let!(:document) { FinancialStatement::Document.create!(date: '2020-20-12') }
     let(:params) { { financial_statement: { revenue: 8000 } } }
 
-    context 'when record exists'
-    context 'when record does not exist'
+    context 'when record exists' do
+      let(:id) { document.id }
+
+      it 'deletes the record and returns a message that it was deleted' do
+        request
+        expect(last_response).to be_ok
+        expect(last_response.body).to eq "Financial statement #{id} was successfully deleted"
+      end
+    end
+
+    context 'when record does not exist' do
+      let(:id) { 'wrong_id' }
+
+      it 'returns 404' do
+        request
+        expect(last_response).to be_not_found
+        expect(last_response.body).to eq('Record not found')
+      end
+    end
   end
 end
