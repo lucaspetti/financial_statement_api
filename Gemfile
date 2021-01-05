@@ -13,6 +13,7 @@ gem 'sinatra', git: 'git://github.com/sinatra/sinatra.git'
 
 group :test do
   gem 'database_cleaner'
+  gem 'mongoid-rspec'
   gem 'rack-test'
   gem 'rspec'
   gem 'simplecov'
