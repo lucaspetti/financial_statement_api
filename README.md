@@ -11,3 +11,7 @@ To start the server:
 ## Run tests
 
 ```bundle exec rspec```
+
+## Enter console
+
+```bin/console```
