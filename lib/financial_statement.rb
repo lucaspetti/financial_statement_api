@@ -1,4 +1,8 @@
 # frozen_string_literal: true
 
-module FinancialStatement
-end
+require 'mongoid'
+require './lib/financial_statement/api'
+require './lib/financial_statement/document_validator'
+require './lib/financial_statement/document'
+
+Mongoid.load!(File.open('./config/mongoid.yml'))

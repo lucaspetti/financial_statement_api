@@ -18,7 +18,7 @@
 ENV['RACK_ENV'] = 'test'
 
 require 'rack/test'
-require './lib/financial_statement/api'
+require './lib/financial_statement'
 require 'database_cleaner'
 require 'mongoid-rspec'
 

@@ -1,11 +1,8 @@
 # frozen_string_literal: true
 
 require 'sinatra'
-require 'mongoid'
 require_relative 'document'
 require_relative 'document_validator'
-
-Mongoid.load!(File.open('./config/mongoid.yml'))
 
 module FinancialStatement
   class Api < ::Sinatra::Base
